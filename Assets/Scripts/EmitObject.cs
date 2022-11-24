@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BzKovSoft.ObjectSlicer.Samples;
 
 public enum GameState { 
     READY,
@@ -23,18 +24,24 @@ public class EmitObject : MonoBehaviour
     public float speed = 0;
     public float maxDetectPointZ;
     public float minDetectPointZ;
+    public float destoryTime = 1f;
     //public int index = 0;
 
     GameManager gameManager;
     Vector3 prePosition;
     EmitObjectPointState positionState = EmitObjectPointState.NONE;
     HitColliderControl hitColliderControl;
+    Rigidbody rigidBody;
+    bool isSliced = false;
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.Instance;
         hitColliderControl = HitColliderControl.Instance;
         prePosition = transform.position;
+        rigidBody = gameObject.GetComponent<Rigidbody>();
+        rigidBody.isKinematic = true;
 
         AIPlayer aiPlayer = AIPlayer.Instance;
         AnimEventTime animEventTime = aiPlayer.animEventTime[(int)emitObjectType];
@@ -47,6 +54,13 @@ public class EmitObject : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(isSliced)
+        {
+            destoryTime -= Time.fixedDeltaTime;
+            if (destoryTime < 0)
+                Destroy(gameObject);
+            return;
+        }
         transform.position += transform.forward * speed * Time.fixedDeltaTime;
 
         /*if(Physics.Linecast(prePosition, transform.position))
@@ -81,6 +95,9 @@ public class EmitObject : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (isSliced)
+            return;
+
         if (hitColliderControl.IsSlash && gameObject.tag == hitColliderControl.targetTagName)
         {
             Vector3 targetObjPosition = transform.position;
@@ -89,10 +106,26 @@ public class EmitObject : MonoBehaviour
             if (heroPosition.z + .5f > targetObjPosition.z && distance < AIPlayer.Instance.swordLength * 1.5f)
             {
                 GameManager.Instance.hitAvailObjectList.Remove(this);
-
                 ParticleManager.Instance.PlayParticle(ParticleManager.GetParticleType(gameObject.name), transform.position);
                 GameManager.Instance.AddCoin(gameManager.hitPoint);
-                Destroy(gameObject);
+
+                rigidBody.isKinematic = false;                
+                isSliced = true;
+                var sliceId = SliceIdProvider.GetNewSliceId();
+                var sliceableA = gameObject.GetComponent<IBzSliceableNoRepeat>();
+                Vector3 a = AIPlayer.Instance.swordObj.transform.position - transform.position;
+                Vector3 b = AIPlayer.Instance.transform.position - transform.position;
+
+                a.Normalize();
+                Vector3 forceVector = a + transform.forward;
+                forceVector.Normalize();
+                rigidBody.AddForce(forceVector * 300);
+
+                Vector3 normalVec = Vector3.Cross(a, b);
+                Plane plane = new Plane(normalVec, transform.position);
+
+                if (sliceableA != null)
+                    sliceableA.Slice(plane, sliceId, null);
             }
         }
     }
