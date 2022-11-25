@@ -66,7 +66,7 @@ public class AIPlayer : MonoBehaviour
 
     public void DetermineAttack()
     {
-        Debug.LogError("-----------------DetermineAttack-----------");
+        Debug.Log("-----------------DetermineAttack-----------");
         List<EmitObject> hitAvailObjs = gameManager.hitAvailObjectList;
         if(hitAvailObjs.Count > 0)
         {
@@ -79,7 +79,7 @@ public class AIPlayer : MonoBehaviour
             animator.SetBool("Attack", true);
             float motionValue = Random.Range(0, 10000) / 10000.0f;
             animator.SetFloat("motionValue", motionValue);
-            Debug.LogError("DetermineAttack : " + direction.ToString());
+            Debug.Log("DetermineAttack : " + direction.ToString());
         }
         determineTime = reactionTime;
     }
