@@ -1,0 +1,16 @@
+{
+    "name": "BzKovSoft.ObjectSlicer.Editor",
+    "references": [
+        "BzKovSoft.ObjectSlicer"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

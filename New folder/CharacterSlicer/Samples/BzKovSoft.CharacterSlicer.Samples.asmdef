@@ -1,0 +1,16 @@
+{
+    "name": "BzKovSoft.CharacterSlicer.Samples",
+    "references": [
+        "BzKovSoft.ObjectSlicer",
+        "BzKovSoft.ObjectSlicer.Samples",
+        "BzKovSoft.CharacterSlicer"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
