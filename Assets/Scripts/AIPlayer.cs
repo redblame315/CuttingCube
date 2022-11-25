@@ -77,7 +77,8 @@ public class AIPlayer : MonoBehaviour
                 animator.SetInteger("Direction", 1 - direction);
 
             animator.SetBool("Attack", true);
-            animator.SetFloat("motionValue", Random.Range(0, 1000) / 1000.0f);
+            float motionValue = Random.Range(0, 10000) / 10000.0f;
+            animator.SetFloat("motionValue", motionValue);
             Debug.LogError("DetermineAttack : " + direction.ToString());
         }
         determineTime = reactionTime;

@@ -82,7 +82,9 @@ public class HeroCamera : MonoBehaviour
 		if (headBone == null || hero == null)
 			return;
 
-		
+		if (GameManager.Instance.gameState != GameState.RUNNING)
+			return;
+
 		// Cached Input
 		camInput.doFPS = Input.GetKeyDown ("1");
 		camInput.do3rdP = Input.GetKeyDown ("2");

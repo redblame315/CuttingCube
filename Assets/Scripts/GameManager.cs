@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         gMain = Singleton<GMain>.Instance;
         playerInfo = gMain.playerInfo;
-
+        playerInfo.Init();
     }
     // Start is called before the first frame update
     void Start()

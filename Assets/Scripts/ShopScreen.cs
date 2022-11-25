@@ -10,9 +10,15 @@ public class ShopScreen : UIScreen
     public Text incomeText;
     public Text coinText;
 
+    public Text speedCoinText;
+    public Text accuracyCoinText;
+    public Text incomeCoinText;
+
     public int speedPrice = 100;
     public int accuracyPrice = 200;
     public int incomePrice = 500;
+
+    public int levelStepPrice = 50;
 
     PlayerInfo playerInfo;
     public override void Init()
@@ -41,10 +47,11 @@ public class ShopScreen : UIScreen
 
     public void SpeedButtonClicked()
     {
-        if (playerInfo.coin < speedPrice)
+        int price = int.Parse(speedCoinText.text);
+        if (playerInfo.coin < price)
             return;
 
-        playerInfo.coin -= speedPrice;
+        playerInfo.coin -= price;
         playerInfo.speed++;
         playerInfo.Save();
 
@@ -53,7 +60,8 @@ public class ShopScreen : UIScreen
 
     public void AccuracyButtonClicked()
     {
-        if (playerInfo.coin < accuracyPrice)
+        int price = int.Parse(accuracyCoinText.text);
+        if (playerInfo.coin < price)
             return;
 
         playerInfo.coin -= accuracyPrice;
@@ -65,7 +73,8 @@ public class ShopScreen : UIScreen
       
     public void IncomeButtonClicked()
     {
-        if (playerInfo.coin < incomePrice)
+        int price = int.Parse(incomeCoinText.text);
+        if (playerInfo.coin < price)
             return;
 
         playerInfo.coin -= incomePrice;
@@ -82,6 +91,9 @@ public class ShopScreen : UIScreen
         incomeText.text = playerInfo.income.ToString();
         coinText.text = playerInfo.coin.ToString();
 
+        speedCoinText.text = (speedPrice + (playerInfo.speed - 1) * levelStepPrice).ToString();
+        accuracyCoinText.text = (accuracyPrice + (playerInfo.accuracy - 1) * levelStepPrice).ToString();
+        incomeCoinText.text = (incomePrice + (playerInfo.income - 1) * levelStepPrice).ToString();
         AIPlayer.Instance.ResetSkillValue();
     }
 

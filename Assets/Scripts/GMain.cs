@@ -13,6 +13,13 @@ public class PlayerInfo
 
     }
 
+    public void Init()
+    {
+        speed = accuracy = income = 30;
+        coin = 50000;
+        Save();
+    }
+
     public void Save()
     {
         PlayerPrefs.SetInt("speed", speed);
@@ -25,8 +32,8 @@ public class PlayerInfo
     {
         speed = PlayerPrefs.GetInt("speed", 30);
         accuracy = PlayerPrefs.GetInt("accuracy", 30);
-        income = PlayerPrefs.GetInt("income", 0);
-        coin = PlayerPrefs.GetInt("coin", 100);
+        income = PlayerPrefs.GetInt("income", 1);
+        coin = PlayerPrefs.GetInt("coin", 1000);
     }
 
 

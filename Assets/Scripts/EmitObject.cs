@@ -105,9 +105,13 @@ public class EmitObject : MonoBehaviour
             float distance = heroPosition.z - targetObjPosition.z;
             if (heroPosition.z + .5f > targetObjPosition.z && distance < AIPlayer.Instance.swordLength * 1.5f)
             {
+                if (gameObject.name.Contains("pos"))
+                    return;
+
                 GameManager.Instance.hitAvailObjectList.Remove(this);
                 ParticleManager.Instance.PlayParticle(ParticleManager.GetParticleType(gameObject.name), transform.position);
                 GameManager.Instance.AddCoin(gameManager.hitPoint);
+                MainUIScreen.Instance.ShowHitPoint(transform.position);
 
                 rigidBody.isKinematic = false;                
                 isSliced = true;
