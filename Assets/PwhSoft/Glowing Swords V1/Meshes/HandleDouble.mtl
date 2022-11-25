@@ -1,0 +1,5 @@
+newmtl Handle
+map_Kd Handle_Double.png
+Kd 1 1 1
+d 1
+
